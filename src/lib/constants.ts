@@ -3,7 +3,18 @@ export const ALLOWED_USERS = [
   'fatemeh@khanevadati.app',
 ];
 
-export const USER_DETAILS = {
+type UserDetail = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
+// Define a more specific type for the USER_DETAILS object
+type UserDetailsRecord = {
+  [key in 'ali' | 'fatemeh']: UserDetail;
+};
+
+export const USER_DETAILS: UserDetailsRecord = {
   ali: {
     id: 'gHZ9n7s2b9X8fJ2kP3s5t8YxVOE2',
     firstName: 'علی',
