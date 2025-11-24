@@ -1,0 +1,25 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isFamilyMember() {
+      // The allowed emails for Ali and Fatemeh.
+      let familyEmails = [
+          'ali@khanevadati.app',
+          'fatemeh@khanevadati.app'
+      ];
+      return request.auth != null && request.auth.token.email in familyEmails;
+    }
+    
+    // Rule for user-specific data (profiles)
+    match /users/{userId} {
+      allow read, write: if isFamilyMember();
+    }
+
+    // Rule for all shared family data, living under a single document.
+    match /family-data/shared-data/{path=**} {
+       allow read, write: if isFamilyMember();
+    }
+  }
+}
