@@ -109,8 +109,11 @@ export function LoanForm({ onCancel, onSubmit, initialData, bankAccounts, payees
 
     const getOwnerName = useCallback((account: BankAccount) => {
         if (account.ownerId === 'shared') return "(مشترک)";
-        const userDetail = USER_DETAILS[account.ownerId];
-        return userDetail ? `(${userDetail.firstName})` : "(ناشناس)";
+        if (account.ownerId === 'ali' || account.ownerId === 'fatemeh') {
+            const userDetail = USER_DETAILS[account.ownerId];
+            return userDetail ? `(${userDetail.firstName})` : "(ناشناس)";
+        }
+        return "(ناشناس)";
     }, []);
     
     const depositAccount = bankAccounts.find(acc => acc.id === watchDepositToAccountId);
@@ -219,7 +222,7 @@ export function LoanForm({ onCancel, onSubmit, initialData, bankAccounts, payees
                             <FormItem>
                                 <FormLabel>مبلغ پیشنهادی هر قسط (تومان)</FormLabel>
                                 <FormControl>
-                                <CurrencyInput value={field.value} onChange={field.onChange} />
+                                <CurrencyInput value={field.value ?? 0} onChange={field.onChange} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
