@@ -1,0 +1,1 @@
+declare module '@hassanmojab/react-modern-calendar-datepicker';
